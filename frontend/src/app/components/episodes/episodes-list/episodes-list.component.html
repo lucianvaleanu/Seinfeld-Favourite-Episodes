@@ -1,0 +1,54 @@
+<div class="filter-and-search">
+  <div class="input-season">
+    <label for="search-episode">Search episode: </label>
+    <input id="search-episode" [(ngModel)]="episodeToFind" (ngModelChange)="searchEpisode($event)" placeholder="">
+  </div>
+  <div class="search-episode">
+    <label for="episode-season">Filter by season: </label>
+    <input id="episode-season" [(ngModel)]="season" (ngModelChange)="onSeasonChange($event)" placeholder="">
+  </div>
+  <div class="input-page-size">
+    <label for="page-size">Set items on page: </label>
+    <input id="page-size" [(ngModel)]="pageSize" (ngModelChange)="setPageSize($event)" placeholder="">
+  </div>
+  <div class="row">
+    <div class="col">
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          Toggle dropdown
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="onRatingSelection(1)">1</button>
+          <button ngbDropdownItem (click)="onRatingSelection(2)">2</button>
+          <button ngbDropdownItem (click)="onRatingSelection(3)">3</button>
+          <button ngbDropdownItem (click)="onRatingSelection(4)">4</button>
+          <button ngbDropdownItem (click)="onRatingSelection(5)">5</button>
+          <button ngbDropdownItem (click)="onRatingSelection(6)">6</button>
+          <button ngbDropdownItem (click)="onRatingSelection(7)">7</button>
+          <button ngbDropdownItem (click)="onRatingSelection(8)">8</button>
+          <button ngbDropdownItem (click)="onRatingSelection(9)">9</button>
+          <button ngbDropdownItem (click)="onRatingSelection(10)">10</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+      *ngFor="let e of episodes | paginate: {itemsPerPage: pageSize, currentPage: p, totalItems: episodesCount}">
+      <div class="episode-item">
+        <a routerLink="/detail/{{transformString(e.title)}}"> <img src={{e.image}}></a>
+        <br />
+        <p>{{e.title}}</p>
+        <a class="link-danger" routerLink="/episodes/delete/{{transformString(e.title)}}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pagination-controls (pageChange)="onPageChange($event)" class="page-control"></pagination-controls>

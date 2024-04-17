@@ -1,0 +1,12 @@
+<div class="question" *ngIf="title">
+    <h2>Are you sure?</h2>
+    <div>Really delete this episode?</div>
+
+    <button type="button" (click)="onConfirm()">
+        Yes
+    </button>
+
+    <button type="button" (click)="onCancel()">
+        No
+    </button>
+</div>

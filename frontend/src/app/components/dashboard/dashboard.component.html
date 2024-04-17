@@ -1,0 +1,7 @@
+<h2>Top Episodes</h2>
+<div class="episodes-menu">
+  <a *ngFor="let episode of episodes"
+    routerLink="/detail/{{transformString(episode.title)}}">
+    {{episode.title}}
+  </a>
+</div>

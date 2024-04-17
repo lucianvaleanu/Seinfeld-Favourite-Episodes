@@ -1,0 +1,5 @@
+:host {
+    display: flex;
+    justify-content: center; /* Center the chart horizontally */
+    margin-top: 50px; /* Add space above the chart */
+  }

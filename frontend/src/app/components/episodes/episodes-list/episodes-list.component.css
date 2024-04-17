@@ -1,0 +1,82 @@
+.container {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.filter-and-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  /* Adjust as needed */
+}
+
+.filter-and-search .input-season,
+.filter-and-search .search-episode {
+  margin: 0 10px;
+  /* Adjust spacing between inputs */
+}
+
+
+label {
+  font-family: 'Inter', sans-serif;
+
+}
+
+input {
+  margin-left: 10px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: #000000;
+}
+
+img {
+  box-shadow: 23px 14px 53px -2px rgba(0, 0, 0, 0.24);
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+}
+
+.episode-item:hover {
+  transform: scale(1.1, 1.1);
+
+  p {
+    font-weight: bold;
+  }
+
+  a {
+    font-weight: bold;
+  }
+
+}
+
+.episode-item:hover>.episode-item:not(:hover) {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+
+.episode-item {
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+.page-control ::ng-deep .ngx-pagination .current {
+  background: #ff5039;
+  
+}
+.page-control{
+  position: fixed;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}

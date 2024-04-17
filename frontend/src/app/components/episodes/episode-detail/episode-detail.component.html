@@ -1,0 +1,29 @@
+<div *ngIf="episode">
+  <h2>{{episode.title}} details</h2>
+  <div class="input-box">
+    <div>
+      <label for="episode-title">Title </label> <br />
+      <input id="episode-title" [(ngModel)]="episode.title" (ngModelChange)="onTitleChange($event)" placeholder="title">
+    </div>
+    <div>
+      <label for="episode-season">Season </label><br />
+      <input id="episode-season" [(ngModel)]="episode.season" (ngModelChange)="onSeasonChange($event)" placeholder="season">
+    </div>
+    <div>
+      <label for="episode-ep">Episode </label><br />
+      <input id="episode-ep" [(ngModel)]="episode.episode_number" (ngModelChange)="onEpisodeChange($event)" placeholder="episode">
+    </div>
+    <div>
+      <label for="episode-rating">Rating </label><br />
+      <input id="episode-rating" [(ngModel)]="episode.rating" (ngModelChange)="onRatingChange($event)" placeholder="rating">
+    </div>
+
+    <button type="button" (click)="goBack()">
+      Go back
+    </button>
+    <button type="button" (click)="onUpdate()">
+      Update
+    </button>
+  </div>
+</div>
+
