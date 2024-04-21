@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 
 class EpisodesRepository {
     constructor(_episodeModel) {
@@ -19,9 +19,10 @@ class EpisodesRepository {
     
     async getEpisodeByTitle(inputTitle) {
         const episode = await this.episodeModel.findOne({
-            where: {
-                title: inputTitle
-            }
+            where: Sequelize.where(
+                Sequelize.fn('LOWER', Sequelize.col('title')),
+                Sequelize.fn('LOWER', inputTitle)
+            )
         });
         return episode;
     }
@@ -69,7 +70,7 @@ class EpisodesRepository {
     }
 
     async getSeasonCounts() {
-        const seasonCounts = await Episode.findAll({
+        const seasonCounts = await this.episodeModel.findAll({
             attributes: ['season', [this.episodeModel.sequelize.fn('COUNT', this.episodeModel.sequelize.col('*')), 'count']],
             group: ['season']
         });

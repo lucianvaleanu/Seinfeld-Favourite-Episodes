@@ -1,4 +1,6 @@
 const Joi = require('joi');
+const ReviewModel = require('../models/review.model');
+const ReviewsRepository = require('../repositories/reviews.repository');
 const ReviewsService = require('../services/reviews.service');
 
 const reviewSchema = Joi.object({
@@ -14,7 +16,7 @@ const textSchema = Joi.string().max(150).required();
 
 class ReviewsController {
     constructor() {
-        this.reviewsService = new ReviewsService();
+        this.reviewsService = new ReviewsService(new ReviewsRepository(ReviewModel));
     }
 
     async getAllReviews(req, res) {

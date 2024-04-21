@@ -27,10 +27,6 @@ class EpisodesService {
 
     async getEpisodeByTitle(title) {
         const transformedTitle = this.transformString(title);
-        console.log("the input title");
-        console.log(title);
-        console.log("the transformed title");
-        console.log(transformedTitle);
         const episode = await this.episodesRepository.getEpisodeByTitle(transformedTitle);
         if (!episode) {
             throw new Error("Could not find episode")
@@ -88,8 +84,6 @@ class EpisodesService {
         const newEpisode = { title: title, season, episode_number, rating, image };
 
         const addedEpisode = await this.episodesRepository.addEpisode(newEpisode);
-        console.log("ADD EPISODE");
-        console.log(addedEpisode);
         return addedEpisode;
     }
 
@@ -124,8 +118,6 @@ class EpisodesService {
     async deleteEpisodeByID(id) {
         id = Number(id);
         const success = await this.episodesRepository.deleteEpisodeByID(id);
-        console.log("The message of success is:")
-        console.log(success);
         if (!success) {
             throw new Error(`Episode not found with ID ${id}`);
         }
@@ -133,7 +125,6 @@ class EpisodesService {
 
     async deleteEpisodeByTitle(title) {
         const episodeToDelete = await this.episodesRepository.getEpisodeByTitle(this.transformString(title));
-        console.log(episodeToDelete);
         if (!episodeToDelete){
             throw new Error(`Episode not found with title ${title}`);
         }

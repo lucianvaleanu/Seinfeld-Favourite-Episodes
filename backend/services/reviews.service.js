@@ -1,9 +1,6 @@
-const ReviewsRepository = require("../repositories/reviews.repository");
-const { Op } = require("sequelize");
-
 class ReviewsService {
-  constructor() {
-    this.reviewsRepository = new ReviewsRepository();
+  constructor(reviewsRepository) {
+    this.reviewsRepository = reviewsRepository;
   }
 
   transformString(input) {
@@ -13,6 +10,10 @@ class ReviewsService {
 
   async getAllReviews() {
     return await this.reviewsRepository.getAllReviews();
+  }
+
+  async getLength(){
+    return await this.reviewsRepository.getLength();
   }
 
   async getReviewsByEpisode(episodeID) {

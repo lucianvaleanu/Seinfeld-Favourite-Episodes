@@ -1,35 +1,37 @@
-// repositories/reviewsRepository.js
-
-const Review = require('../models/review.model');
-
 class ReviewsRepository {
-    constructor() {
-        this.ReviewModel = Review;
+    constructor(_reviewModel) {
+        this.reviewModel = _reviewModel;
     }
 
     async getAllReviews() {
-        return await this.ReviewModel.findAll();
+        return await this.reviewModel.findAll();
     }
 
+    async getLength(){
+        const length = await this.reviewModel.count();
+        return length;
+    }
+
+
     async getReviewsByEpisode(episodeID) {
-        return await this.ReviewModel.findAll({ where: { episodeID } });
+        return await this.reviewModel.findAll({ where: { episodeID } });
     }
 
     async getReviewByID(reviewID) {
-        return await this.ReviewModel.findByPk(reviewID);
+        return await this.reviewModel.findByPk(reviewID);
     }
 
     async getReviewByEpisodeAndTitle(episodeID, title) {
-        return await this.ReviewModel.findOne({ where: { episodeID, title } });
+        return await this.reviewModel.findOne({ where: { episodeID, title } });
       }
 
     async addReview(review) {
-        return await this.ReviewModel.create(review);
+        return await this.reviewModel.create(review);
     }
 
     async updateReview(review) {
         const { reviewID, text, title } = review;
-        const existingReview = await this.ReviewModel.findByPk(reviewID);
+        const existingReview = await this.reviewModel.findByPk(reviewID);
         if (!existingReview) {
             throw new Error('Review not found');
         }
@@ -39,7 +41,7 @@ class ReviewsRepository {
     }
 
     async deleteReviewByID(reviewID) {
-        const review = await this.ReviewModel.findByPk(reviewID);
+        const review = await this.reviewModel.findByPk(reviewID);
         if (review) {
             await review.destroy();
             return true;
@@ -48,7 +50,7 @@ class ReviewsRepository {
     }
 
     async deleteReviewByTitle(title) {
-        await this.ReviewModel.destroy({ where: { title } });
+        await this.reviewModel.destroy({ where: { title } });
     }
 }
 
