@@ -1,25 +1,24 @@
 const router = require("express").Router();
-const EpisodeController = require('../controllers/episodes.controller');
-const episodeController = new EpisodeController();
+const EpisodesController = require('../controllers/episodes.controller');
+const episodesController = new EpisodesController();
 
-router.get('/', episodeController.getAllEpisodes.bind(episodeController));
-router.get('/pie-chart-data', episodeController.getPieChartData.bind(episodeController));
-router.get('/sorted', episodeController.getSortedEpisodes.bind(episodeController));
-router.get('/id/:id', episodeController.getEpisodeByID.bind(episodeController));
-router.get('/title/:title', episodeController.getEpisodeByTitle.bind(episodeController));
-router.get('/season/:season', episodeController.getEpisodesBySeason.bind(episodeController));
-router.get('/page/:page/:items', episodeController.getEpisodesByPage.bind(episodeController));
-router.get('/length/', episodeController.getLength.bind(episodeController));
-router.get('/rating/:rating', episodeController.getEpisodesByRating.bind(episodeController));
+router.get('/', episodesController.getAllEpisodes.bind(episodesController));
+router.get('/length/', episodesController.getLength.bind(episodesController));
+router.get('/id/:id', episodesController.getEpisodeByID.bind(episodesController));
+router.get('/title/:title', episodesController.getEpisodeByTitle.bind(episodesController));
+router.get('/page/:page/:items', episodesController.getEpisodesByPage.bind(episodesController));
+router.get('/sorted', episodesController.getSortedEpisodes.bind(episodesController));
+router.get('/season/:season', episodesController.getEpisodesBySeason.bind(episodesController));
+router.get('/rating/:rating', episodesController.getEpisodesByRating.bind(episodesController));
+router.get('/search/:title', episodesController.searchEpisodesByTitle.bind(episodesController));
+router.get('/pie-chart-data', episodesController.getPieChartData.bind(episodesController));
 
-router.get('/search/:title', episodeController.searchEpisodesByTitle.bind(episodeController));
+router.post('/', episodesController.createEpisode.bind(episodesController));
 
-router.post('/', episodeController.createEpisode.bind(episodeController));
+router.put('/id/:id', episodesController.updateEpisode.bind(episodesController));
 
-router.put('/id/:id', episodeController.updateEpisode.bind(episodeController));
-
-router.delete('/:id', episodeController.deleteEpisodeByID.bind(episodeController));
-router.delete('/title/:title', episodeController.deleteEpisodeByTitle.bind(episodeController));
+router.delete('/:id', episodesController.deleteEpisodeByID.bind(episodesController));
+router.delete('/title/:title', episodesController.deleteEpisodeByTitle.bind(episodesController));
 
 module.exports = router;
 

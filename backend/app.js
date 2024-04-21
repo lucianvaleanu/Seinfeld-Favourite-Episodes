@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const episodesRouter = require("./routes/episodes.route");
+const reviewsRouter = require("./routes/reviews.route");
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(cors({
   }));
 
 app.use("/episodes", episodesRouter);
+app.use("/reviews", reviewsRouter);
 
 app.get("/", (req,res)=>{
     res.sendFile(__dirname + "/views/index.html");

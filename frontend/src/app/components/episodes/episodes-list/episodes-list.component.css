@@ -1,5 +1,4 @@
 .container {
-  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -9,27 +8,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  /* Adjust as needed */
+  margin-top: 25px;
+}
+.dropdown{
+  margin-top: 10px;
 }
 
 .filter-and-search .input-season,
 .filter-and-search .search-episode {
   margin: 0 10px;
-  /* Adjust spacing between inputs */
 }
 
 
 label {
   font-family: 'Inter', sans-serif;
 
-}
-
-input {
-  margin-left: 10px;
-  border-radius: 8px;
-  border-width: 1px;
-  border-color: #000000;
 }
 
 img {
@@ -70,10 +63,30 @@ a {
   margin: 0;
   padding: 0;
 }
+
+.dropdown-toggle {
+  margin: 0 10px;
+  padding-left: 3px;
+  padding-right: 3px;
+  color:#ff5039;
+  border: 1px solid #ff5039;
+}
+
+.dropdown-toggle:hover {
+  color: white;
+  background-color: #ff5039;
+}
+
+.dropdown-toggle:focus {
+  color: white;
+  background-color: #ff5039;
+}
+
 .page-control ::ng-deep .ngx-pagination .current {
   background: #ff5039;
   
 }
+
 .page-control{
   position: fixed;
   bottom: -5px;

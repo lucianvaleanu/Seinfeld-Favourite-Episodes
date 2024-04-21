@@ -1,21 +1,42 @@
-<div class="filter-and-search">
-  <div class="input-season">
-    <label for="search-episode">Search episode: </label>
-    <input id="search-episode" [(ngModel)]="episodeToFind" (ngModelChange)="searchEpisode($event)" placeholder="">
-  </div>
-  <div class="search-episode">
-    <label for="episode-season">Filter by season: </label>
-    <input id="episode-season" [(ngModel)]="season" (ngModelChange)="onSeasonChange($event)" placeholder="">
-  </div>
-  <div class="input-page-size">
-    <label for="page-size">Set items on page: </label>
-    <input id="page-size" [(ngModel)]="pageSize" (ngModelChange)="setPageSize($event)" placeholder="">
-  </div>
-  <div class="row">
-    <div class="col">
+<div class="filter-and-search">    
+    <div class="input-season form-group">
+      <label for="search-episode">Search episode:</label>
+      <input id="search-episode" class="form-control" [(ngModel)]="episodeToFind"
+        (ngModelChange)="searchEpisode($event)" placeholder="Enter episode name">
+    </div>
+
+    <div class="search-episode form-group">
+      <label for="episode-season">Filter by season:</label>
+      <input id="episode-season" class="form-control" [(ngModel)]="season" (ngModelChange)="onSeasonChange($event)"
+        placeholder="Enter season number">
+    </div>
+
+    <div class="dropdown">
       <div ngbDropdown class="d-inline-block">
         <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-          Toggle dropdown
+          Set items on page
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="setPageSize(1)">1</button>
+          <button ngbDropdownItem (click)="setPageSize(2)">2</button>
+          <button ngbDropdownItem (click)="setPageSize(3)">3</button>
+          <button ngbDropdownItem (click)="setPageSize(4)">4</button>
+          <button ngbDropdownItem (click)="setPageSize(5)">5</button>
+          <button ngbDropdownItem (click)="setPageSize(6)">6</button>
+          <button ngbDropdownItem (click)="setPageSize(7)">7</button>
+          <button ngbDropdownItem (click)="setPageSize(8)">8</button>
+          <button ngbDropdownItem (click)="setPageSize(9)">9</button>
+          <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+          <button ngbDropdownItem (click)="setPageSize(11)">11</button>
+          <button ngbDropdownItem (click)="setPageSize(12)">12</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          Rating
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem (click)="onRatingSelection(1)">1</button>
@@ -31,10 +52,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-
-
 </div>
 
 <div class="container text-center">

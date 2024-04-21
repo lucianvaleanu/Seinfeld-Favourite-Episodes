@@ -1,5 +1,8 @@
 const Joi = require('joi');
+const EpisodeModel = require('../models/episode.model')
+const EpisodesRepository = require('../repositories/episodes.repository');
 const EpisodeService = require('../services/episodes.service');
+
 
 const episodeSchema = Joi.object({
     title: Joi.string().required(),
@@ -10,11 +13,15 @@ const episodeSchema = Joi.object({
 
 const idSchema = Joi.number().integer().positive().required();
 
+const seasonSchema = Joi.number().integer().positive().required();
+
 const titleSchema = Joi.string().required();
+
+const ratingSchema = Joi.number().min(0).max(10).required();
 
 class EpisodesController {
     constructor() {
-        this.episodeService = new EpisodeService();
+        this.episodeService = new EpisodeService(new EpisodesRepository(EpisodeModel));
     }
 
     async getAllEpisodes(req, res) {
@@ -69,7 +76,7 @@ class EpisodesController {
     async getEpisodesBySeason(req, res) {
         const season = req.params.season;
         try {
-            await this.validateInput(idSchema, season);
+            await this.validateInput(seasonSchema, season);
             const filteredEpisodes = await this.episodeService.getEpisodesBySeason(season);
             res.status(200).json(filteredEpisodes);
         } catch (error) {
@@ -89,6 +96,7 @@ class EpisodesController {
     async getEpisodesByRating(req, res) {
         const rating = req.params.rating;
         try{
+            await this.validateInput(ratingSchema, rating);
             const episodes = await this.episodeService.getEpisodesByRating(rating);
             res.status(200).json(episodes);
         }catch(error){

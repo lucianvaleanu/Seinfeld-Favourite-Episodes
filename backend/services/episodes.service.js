@@ -1,8 +1,6 @@
-const EpisodesRepository = require("../repositories/episodes.repository");
-
 class EpisodesService {
-    constructor() {
-        this.episodesRepository = new EpisodesRepository();
+    constructor(episodesRepository) {
+        this.episodesRepository = episodesRepository;
     }
 
     transformString(input) {
@@ -15,14 +13,8 @@ class EpisodesService {
     }
 
     async getLength() {
-        const sql = 'SELECT COUNT(*) AS episodeCount FROM episodes';
-        const result = await this.episodesRepository.executeQuery(sql);
-
-        const episodeCount = result[0].episodeCount;
-
-        return episodeCount;
+        return this.episodesRepository.getEpisodeCount();
     }
-
 
     async getEpisodeByID(id) {
         id = Number(id);
@@ -35,50 +27,16 @@ class EpisodesService {
 
     async getEpisodeByTitle(title) {
         const transformedTitle = this.transformString(title);
-        const sql = 'SELECT * FROM episodes WHERE LOWER(title) = ?';
-        const episodes = await this.episodesRepository.executeQuery(sql, [transformedTitle]);
-
-        if (!episodes || episodes.length === 0) {
-            throw new Error(`Episode not found with title '${title}'`);
+        console.log("the input title");
+        console.log(title);
+        console.log("the transformed title");
+        console.log(transformedTitle);
+        const episode = await this.episodesRepository.getEpisodeByTitle(transformedTitle);
+        if (!episode) {
+            throw new Error("Could not find episode")
         }
-
-        return episodes[0];
+        return episode;
     }
-
-
-    async getSortedEpisodes() {
-        const sql = 'SELECT * FROM episodes ORDER BY title';
-        const sortedEpisodes = await this.episodesRepository.executeQuery(sql);
-        return sortedEpisodes;
-    }
-
-
-    async getEpisodesBySeason(season) {
-        season = Number(season);
-        if (isNaN(season)) {
-            throw new Error('Invalid season parameter');
-        }
-
-        const sql = 'SELECT * FROM episodes WHERE season = ?';
-        const episodes = await this.episodesRepository.executeQuery(sql, [season]);
-
-        return episodes;
-    }
-
-    async getPieChartData() {
-        const sql = 'SELECT season, COUNT(*) AS count FROM episodes GROUP BY season';
-        const results = await this.episodesRepository.executeQuery(sql);
-
-        const seasonCounts = {};
-        results.forEach(row => {
-            const season = row.season;
-            const count = row.count;
-            seasonCounts[season] = count;
-        });
-
-        return seasonCounts;
-    }
-
 
     async getEpisodesByPage(pageNumber, pageSize) {
         pageNumber = Number(pageNumber);
@@ -89,102 +47,98 @@ class EpisodesService {
         }
 
         const offset = (pageNumber - 1) * pageSize;
-        const sql = 'SELECT * FROM episodes ORDER BY id LIMIT ? OFFSET ?';
-        const episodes = await this.episodesRepository.executeQuery(sql, [pageSize, offset]);
 
-        return episodes;
+        return this.episodesRepository.getEpisodesByPage(pageSize, offset);
     }
 
+    async getSortedEpisodes() {
+        return this.episodesRepository.getEpisodesSortedByTitle();
+    }
+
+    async getEpisodesBySeason(season) {
+        season = Number(season);
+        return this.episodesRepository.getEpisodesBySeason(season);
+    }
 
     async getEpisodesByRating(rating) {
         rating = Number(rating);
-        if (isNaN(rating) || rating < 0 || rating > 10) {
-            throw new Error('Invalid rating parameter. Rating must be between 0 and 10.');
-        }
-
-        const sql = 'SELECT * FROM episodes WHERE rating = ?';
-        const episodes = await this.episodesRepository.executeQuery(sql, [rating]);
-
-        return episodes;
+        return this.episodesRepository.getEpisodesByRating(rating);
     }
 
+    async searchEpisodesByTitle(title) {
+        const transformedTitle = this.transformString(title);
+        return this.episodesRepository.searchEpisodesByTitle(transformedTitle);
+    }
 
+    async getPieChartData() {
+        return this.episodesRepository.getSeasonCounts();
+    }
 
     async addEpisode(title, season, episode_number, rating) {
-        if (!title || !season || !episode_number || !rating) {
-            throw new Error('Missing required parameters');
-        }
-
         const transformedTitle = this.transformString(title);
-        const episodes = await this.episodesRepository.getAllEpisodes();
-        const episode = episodes.filter((e) => this.transformString(e.title) == transformedTitle);
-        if (episode.length > 0) {
-            throw new Error("An episode with the same title already exists!");
+        const existingEpisode = await this.episodesRepository.getEpisodeByTitle(transformedTitle);
+        if (existingEpisode) {
+            throw new Error(`An episode with the title '${title}' already exists`);
         }
-
         season = Number(season);
         episode_number = Number(episode_number);
         rating = Number(rating);
 
-        if (isNaN(season) || isNaN(episode_number) || isNaN(rating)) {
-            throw new Error('Invalid episode data');
+        const image = "../assets/default.jpg";
+        const newEpisode = { title: title, season, episode_number, rating, image };
+
+        const addedEpisode = await this.episodesRepository.addEpisode(newEpisode);
+        console.log("ADD EPISODE");
+        console.log(addedEpisode);
+        return addedEpisode;
+    }
+
+    async updateEpisode(id, newTitle, newSeason, newEpisodeNumber, newRating) {
+        id = Number(id);
+        newSeason = Number(newSeason);
+        newEpisodeNumber = Number(newEpisodeNumber);
+        newRating = Number(newRating);
+        const episodeToUpdate = await this.getEpisodeByID(id);
+        if (newTitle && newTitle !== episodeToUpdate.title) {
+            const transformedNewTitle = this.transformString(newTitle);
+            const existingEpisodeWithSameTitle = await this.episodesRepository.getEpisodeByTitle(transformedNewTitle);
+
+            if (existingEpisodeWithSameTitle && existingEpisodeWithSameTitle.id !== id) {
+                throw new Error(`An episode with the title '${newTitle}' already exists`);
+            }
         }
 
-        const image = "../assets/default.jpg";
-        const newEpisode = { title, season, episode_number, rating, image };
-        await this.episodesRepository.addEpisode(newEpisode);
-        return newEpisode;
+        const updatedEpisode = {
+            id,
+            title: newTitle ? newTitle : episodeToUpdate.title,
+            season: newSeason ? newSeason : episodeToUpdate.season,
+            episode_number: newEpisodeNumber ? newEpisodeNumber : episodeToUpdate.episode_number,
+            rating: newRating ? newRating : episodeToUpdate.rating,
+            image: episodeToUpdate.image
+        };
+        const result = await this.episodesRepository.updateEpisode(updatedEpisode);
+
+        return result;
     }
 
     async deleteEpisodeByID(id) {
         id = Number(id);
         const success = await this.episodesRepository.deleteEpisodeByID(id);
+        console.log("The message of success is:")
+        console.log(success);
         if (!success) {
             throw new Error(`Episode not found with ID ${id}`);
         }
     }
 
     async deleteEpisodeByTitle(title) {
+        const episodeToDelete = await this.episodesRepository.getEpisodeByTitle(this.transformString(title));
+        console.log(episodeToDelete);
+        if (!episodeToDelete){
+            throw new Error(`Episode not found with title ${title}`);
+        }
         await this.episodesRepository.deleteEpisodeByTitle(this.transformString(title));
     }
-
-    async searchEpisodesByTitle(title) {
-        if (!title) {
-            throw new Error('Title parameter is missing');
-        }
-
-        const transformedTitle = this.transformString(title);
-        const sql = 'SELECT * FROM episodes WHERE LOWER(title) LIKE ?';
-        const searchTerm = `%${transformedTitle}%`;
-        const episodes = await this.episodesRepository.executeQuery(sql, [searchTerm]);
-
-        return episodes;
-    }
-
-    async updateEpisode(id, newTitle, newSeason, newEp, newRating) {
-        id = Number(id);
-        newSeason = Number(newSeason);
-        newEp = Number(newEp);
-        newRating = Number(newRating);
-    
-        const episodeToUpdate = await this.episodesRepository.getEpisodeByID(id);
-    
-        if (newTitle && newTitle !== episodeToUpdate.title) {
-            const transformedTitle = this.transformString(newTitle);
-    
-            const sql = 'SELECT * FROM episodes WHERE LOWER(title) = ? AND id <> ?';
-            const existingEpisodeWithSameTitle = await this.episodesRepository.executeQuery(sql, [transformedTitle, id]);
-    
-            if (existingEpisodeWithSameTitle.length > 0) {
-                throw new Error("An episode with the same title already exists!");
-            }
-        }
-        await this.episodesRepository.updateEpisode({id: id, title: newTitle, season: newSeason, episode_number: newEp, rating: newRating});
-    
-        return episodeToUpdate;
-    }
-    
-
 }
 
 module.exports = EpisodesService;

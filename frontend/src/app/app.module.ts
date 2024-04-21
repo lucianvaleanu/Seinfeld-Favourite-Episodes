@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EpisodeDetailComponent } from './components/episodes/episode-detail/episode-detail.component';
 import { EpisodeAddComponent } from './components/episodes/episode-add/episode-add.component';
 import { EpisodeDeleteComponent } from './components/episodes/episode-delete/episode-delete.component';
@@ -24,7 +23,6 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     declarations: [
         AppComponent,
-        DashboardComponent,
         EpisodesComponent,
         EpisodeDetailComponent,
         EpisodeAddComponent,
