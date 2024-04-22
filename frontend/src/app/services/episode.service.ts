@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Episode } from "../models/episode";
-import { Observable, map, of } from "rxjs";
+import { Observable, map} from "rxjs";
 import { WebRequestService } from './web-request.service';
 
 
@@ -8,9 +8,6 @@ import { WebRequestService } from './web-request.service';
   providedIn: 'root'
 })
 export class EpisodeService {
-
-
-  episodesList: Episode[] = [];
 
   constructor(private webReqService: WebRequestService) { }
 
@@ -111,7 +108,6 @@ export class EpisodeService {
   getTotalCount(): Observable<number> {
     return this.webReqService.get("episodes/length").pipe(
       map((response: any) => {
-        // Assuming response is a number from the API
         return response;
       })
     );
@@ -135,12 +131,8 @@ export class EpisodeService {
 
   deleteEpisode(title: string): Observable<void> {
     return this.webReqService.delete(`episodes/title/${title}`).pipe(
-      map(() => undefined) // Map the response to undefined
+      map(() => undefined)
     );
-  }
-
-  getLength(): number {
-    return this.episodesList.length;
   }
 
   transformString(input: string): string {

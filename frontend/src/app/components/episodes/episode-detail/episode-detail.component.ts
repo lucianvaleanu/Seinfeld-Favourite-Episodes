@@ -13,6 +13,7 @@ import { EpisodeService } from '../../../services/episode.service';
 })
 export class EpisodeDetailComponent {
 
+
   episode?: Episode;
 
   constructor(

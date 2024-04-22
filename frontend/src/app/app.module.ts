@@ -19,6 +19,10 @@ import { NgxPaginationModule} from 'ngx-pagination';
 
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReviewsListComponent } from './components/reviews/reviews-list/reviews-list.component';
+import { ReviewsAddComponent } from './components/reviews/reviews-add/reviews-add.component';
+import { ReviewsUpdateComponent } from './components/reviews/reviews-update/reviews-update.component';
+import { ReviewDeleteComponent } from './components/reviews/review-delete/review-delete.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +31,11 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
         EpisodeDetailComponent,
         EpisodeAddComponent,
         EpisodeDeleteComponent,
-        EpisodesPieChartComponent
+        EpisodesPieChartComponent,
+        ReviewsListComponent,
+        ReviewsAddComponent,
+        ReviewsUpdateComponent,
+        ReviewDeleteComponent
     ],
     providers: [
         provideHttpClient(withFetch()),

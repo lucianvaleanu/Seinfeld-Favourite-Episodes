@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <h2>Reviews</h2>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div *ngFor="let review of reviews" class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ review.title }}</h5>
+          <p class="card-text">{{ review.text }}</p>
+          <div class="d-flex">
+            <button type="button" class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#updateReviewModal"
+                    (click)="selectedReview = review">
+              <i class="bi bi-pencil-square"></i> Update
+            </button>
+            <app-reviews-update [review]="selectedReview"></app-reviews-update>
+            
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteReviewModal"
+                    (click)="selectedReview = review">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+            <app-review-delete [review]="selectedReview"></app-review-delete>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+</div>

@@ -1,29 +1,49 @@
 <div *ngIf="episode">
   <h2>{{episode.title}} details</h2>
-  <div class="input-box">
-    <div>
-      <label for="episode-title">Title </label> <br />
-      <input id="episode-title" [(ngModel)]="episode.title" (ngModelChange)="onTitleChange($event)" placeholder="title">
+  <div class="d-flex justify-content-center">
+    <div class="input-box">
+      <div class="form-group row">
+        <label for="episode-title">Title</label>
+        <div>
+          <input id="episode-title" [(ngModel)]="episode.title" (ngModelChange)="onTitleChange($event)" class="form-control" placeholder="Title">
+        </div>
+      </div>
+    
+      <div class="form-group row">
+        <label for="episode-season">Season</label>
+        <div>
+          <input id="episode-season" [(ngModel)]="episode.season" (ngModelChange)="onSeasonChange($event)" class="form-control" placeholder="Season">
+        </div>
+      </div>
+    
+      <div class="form-group row">
+        <label for="episode-ep">Episode</label>
+        <div>
+          <input id="episode-ep" [(ngModel)]="episode.episode_number" (ngModelChange)="onEpisodeChange($event)" class="form-control" placeholder="Episode">
+        </div>
+      </div>
+    
+      <div class="form-group row">
+        <label for="episode-rating">Rating</label>
+        <div>
+          <input id="episode-rating" [(ngModel)]="episode.rating" (ngModelChange)="onRatingChange($event)" class="form-control" placeholder="Rating">
+        </div>
+      </div>
     </div>
-    <div>
-      <label for="episode-season">Season </label><br />
-      <input id="episode-season" [(ngModel)]="episode.season" (ngModelChange)="onSeasonChange($event)" placeholder="season">
-    </div>
-    <div>
-      <label for="episode-ep">Episode </label><br />
-      <input id="episode-ep" [(ngModel)]="episode.episode_number" (ngModelChange)="onEpisodeChange($event)" placeholder="episode">
-    </div>
-    <div>
-      <label for="episode-rating">Rating </label><br />
-      <input id="episode-rating" [(ngModel)]="episode.rating" (ngModelChange)="onRatingChange($event)" placeholder="rating">
-    </div>
-
-    <button type="button" (click)="goBack()">
-      Go back
-    </button>
-    <button type="button" (click)="onUpdate()">
-      Update
-    </button>
   </div>
 </div>
 
+<div class="text-center">
+  <button type="button" class="btn btn-light" (click)="goBack()">
+    Go back
+  </button>
+  <button type="button" class="btn btn-light" (click)="onUpdate()">
+    Update
+  </button>
+  <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addReviewModal" data-whatever="">
+    Add Review
+  </button>
+</div>
+
+<app-reviews-add></app-reviews-add>
+<app-reviews-list></app-reviews-list>

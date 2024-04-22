@@ -1,27 +1,37 @@
 <h2>Add a new episode</h2>
-<div class="input-box">
-    <div>
-        <label for="episode-title">Title </label> <br />
-        <input id="episode-title" [(ngModel)]="newEpisodeTitle" placeholder="">
-    </div>
-    <div>
-        <label for="episode-season">Season </label><br />
-        <input id="episode-season" [(ngModel)]="newEpisodeSeason" placeholder="">
-    </div>
-    <div>
-        <label for="episode-ep">Episode </label><br />
-        <input id="episode-ep" [(ngModel)]="newEpisodeEp" placeholder="">
-    </div>
-    <div>
-        <label for="episode-rating">Rating </label><br />
-        <input id="episode-rating" [(ngModel)]="newEpisodeRating" placeholder="">
+<div class="d-flex justify-content-center">
+  <div class="input-box">
+    <div class="form-group row">
+      <label for="episode-title">Title</label>
+      <div>
+        <input type="text" id="episode-title" [(ngModel)]="newEpisodeTitle" class="form-control" placeholder="Title">
+      </div>
     </div>
 
-    <button type="button" (click)="onAdd()">
-        Add
-    </button>
+    <div class="form-group row">
+      <label for="episode-season">Season</label>
+      <div>
+        <input type="number" id="episode-season" [(ngModel)]="newEpisodeSeason" class="form-control" placeholder="Season">
+      </div>
+    </div>
 
-    <button type="button" (click)="goBack()">
-        Go back
-    </button>
+    <div class="form-group row">
+      <label for="episode-ep">Episode</label>
+      <div>
+        <input type="number" id="episode-ep" [(ngModel)]="newEpisodeEp" class="form-control" placeholder="Episode">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="episode-rating">Rating</label>
+      <div>
+        <input type="number" id="episode-rating" [(ngModel)]="newEpisodeRating" class="form-control" placeholder="Rating">
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="btn btn-light" (click)="onAdd()">Add</button>
+      <button type="button" class="btn btn-light" (click)="goBack()">Go back</button>
+    </div>
+  </div>
 </div>
