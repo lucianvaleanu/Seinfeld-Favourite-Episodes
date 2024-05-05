@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { EpisodeService } from '../../../services/episode.service';
 import { Location } from '@angular/common';
 
@@ -16,13 +15,11 @@ export class EpisodeAddComponent {
   newEpisodeRating?: number = undefined;
 
   constructor(
-    private route: ActivatedRoute,
     private episodeService: EpisodeService,
     private location: Location
   ) { }
 
   onAdd(): void {
-    console.log("Suntem in onAdd() din add component");
     if (this.newEpisodeTitle !== undefined && this.newEpisodeSeason !== undefined && this.newEpisodeEp !== undefined && this.newEpisodeRating !== undefined) {
       this.episodeService.addEpisode(this.newEpisodeTitle.trim(), this.newEpisodeSeason, this.newEpisodeEp, this.newEpisodeRating).subscribe(() => {
         this.location.back();

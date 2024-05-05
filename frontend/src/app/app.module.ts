@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from "@angular/forms";
+
 
 import { RouterModule } from '@angular/router';
 
@@ -15,14 +17,19 @@ import { EpisodesPieChartComponent } from './components/episodes/episodes-pie-ch
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReviewsListComponent } from './components/reviews/reviews-list/reviews-list.component';
 import { ReviewsAddComponent } from './components/reviews/reviews-add/reviews-add.component';
 import { ReviewsUpdateComponent } from './components/reviews/reviews-update/reviews-update.component';
 import { ReviewDeleteComponent } from './components/reviews/review-delete/review-delete.component';
+import { SignupComponent } from './components/users/signup/signup.component';
+import { LoginComponent } from './components/users/login/login.component';
+
+import { AuthInterceptorService } from './services/auth-interceptor.service';
+
 
 @NgModule({
     declarations: [
@@ -35,17 +42,24 @@ import { ReviewDeleteComponent } from './components/reviews/review-delete/review
         ReviewsListComponent,
         ReviewsAddComponent,
         ReviewsUpdateComponent,
-        ReviewDeleteComponent
+        ReviewDeleteComponent,
+        SignupComponent,
+        LoginComponent
     ],
     providers: [
         provideHttpClient(withFetch()),
-        provideClientHydration()
+        provideClientHydration(),
+        { provide: HTTP_INTERCEPTORS,
+          useClass: AuthInterceptorService,
+          multi: true
+        }
     ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         NgxChartsModule,
         BrowserAnimationsModule,

@@ -1,3 +1,10 @@
+<h1>My Favourite Seinfeld Episodes</h1>
+<nav>
+  <a routerLink="/episodes">Episodes</a>
+  <a routerLink="/episodes/add">Add a new episode</a>
+  <a routerLink="/episodes/pie-chart">View Pie Chart</a>
+</nav>
+
 <div class="filter-and-search">    
     <div class="input-season form-group">
       <label for="search-episode">Search episode:</label>
@@ -49,6 +56,8 @@
           <button ngbDropdownItem (click)="onRatingSelection(8)">8</button>
           <button ngbDropdownItem (click)="onRatingSelection(9)">9</button>
           <button ngbDropdownItem (click)="onRatingSelection(10)">10</button>
+          <button ngbDropdownItem (click)="getAllRatings()">All episodes</button>
+
         </div>
       </div>
     </div>

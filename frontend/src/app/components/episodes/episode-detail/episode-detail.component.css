@@ -34,3 +34,36 @@ input {
   border-color: #ff5039;
   color: white;
 }
+h1 {
+  margin-top: 35px;
+  color: #ff5039;
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  font-size: 250%;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+nav a {
+  padding: 1rem;
+  text-decoration: none;
+  margin-top: 25px;
+  margin-right: 10px;
+  display: inline-block;
+  background-color: #e8e8e8;
+  color: #3d3d3d;
+  border-radius: 8px;
+
+}
+
+nav a:hover {
+  color: white;
+  background-color: #ff5039;
+}
+nav a:active {
+  background-color: black;
+}

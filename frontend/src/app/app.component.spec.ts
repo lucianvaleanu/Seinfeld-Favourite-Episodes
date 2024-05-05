@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EpisodeDetailComponent } from './components/episodes/episode-detail/episode-detail.component';
 import { EpisodesComponent } from './components/episodes/episodes-list/episodes-list.component';
 import { EpisodeAddComponent } from './components/episodes/episode-add/episode-add.component';
@@ -29,7 +28,6 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         NgxPaginationModule],
       declarations: [AppComponent,
-        DashboardComponent,
         EpisodesComponent,
         EpisodeDetailComponent,
         EpisodeAddComponent,

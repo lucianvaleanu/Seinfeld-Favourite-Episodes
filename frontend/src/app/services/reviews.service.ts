@@ -13,12 +13,7 @@ export class ReviewService {
   getAllReviews(): Observable<Review[]> {
     return this.webReqService.get('reviews').pipe(
       map((response:any)=>{
-        return response.map((review: any)=>({
-            reviewID: review.reviewID,
-            episodeID: review.episodeID,
-            text: review.text,
-            title: review.title
-        }));
+        return response as Review[];
       })
     );
   }
@@ -28,13 +23,8 @@ export class ReviewService {
       switchMap((episodeResponse: any) => {
         const episodeID = episodeResponse.id;
         return this.webReqService.get(`reviews/ep/${episodeID}`).pipe(
-          map((reviewResponse: any) => {
-            return reviewResponse.map((review: any) => ({
-              reviewID: review.reviewID,
-              episodeID: review.episodeID,
-              text: review.text,
-              title: review.title
-            }));
+          map((response:any)=>{
+            return response as Review[];
           })
         );
       })
@@ -43,12 +33,9 @@ export class ReviewService {
 
   getReviewByID(reviewID: number): Observable<Review> {
     return this.webReqService.get(`reviews/id/${reviewID}`).pipe(
-      map((response: any) => ({
-        reviewID: response.reviewID,
-        episodeID: response.episodeID,
-        text: response.text,
-        title: response.title
-      }))
+      map((response:any)=>{
+        return response as Review;
+      })
     );
   }
 
@@ -59,12 +46,9 @@ export class ReviewService {
       title
     };
     return this.webReqService.post('reviews', reviewData).pipe(
-      map((response: any) => ({
-        reviewID: response.reviewID,
-        episodeID: response.episodeID,
-        text: response.text,
-        title: response.title
-      }))
+      map((response:any)=>{
+        return response as Review;
+      })
     );
   }
 

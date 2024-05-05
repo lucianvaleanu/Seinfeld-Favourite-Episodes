@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Episode } from "../models/episode";
-import { Observable, map} from "rxjs";
+import { Observable, map, throwError} from "rxjs";
 import { WebRequestService } from './web-request.service';
+import { ToastService } from './toast.service';
 
 
 @Injectable({
@@ -10,6 +11,82 @@ import { WebRequestService } from './web-request.service';
 export class EpisodeService {
 
   constructor(private webReqService: WebRequestService) { }
+
+  getEpisodesByRating(rating: number): Observable<Episode[]> {
+    return this.webReqService.get(`episodes/rating/${rating}`).pipe(
+      map((response: any) => {
+        return response as Episode[];
+      })
+    );
+  }
+
+  getEpisodeByID(id: number): Observable<Episode> {
+    return this.webReqService.get(`episodes/id/${id}`).pipe(
+      map((response: any) => {
+        return response as Episode;
+      })
+    );
+  }
+
+  getPieChartData(): Observable<any> {
+    return this.webReqService.get("episodes/pie-chart-data");
+  }
+
+  getEpisodeByTitle(title: string): Observable<Episode> {
+    return this.webReqService.get(`episodes/title/${this.transformString(title)}`).pipe(
+      map((response: any) => {
+        return response as Episode;
+      })
+    );
+  }
+
+  getEpisodes(): Observable<Episode[]> {
+    return this.webReqService.get("episodes").pipe(
+      map((response: any) => {
+        return response as Episode[];
+      })
+    );
+  }
+
+  getTotalCount(): Observable<number> {
+    return this.webReqService.get("episodes/length").pipe(
+      map((response: any) => {
+        return response as number;
+      })
+    );
+  }
+  
+
+  getEpisodesByPage(page: number, itemsPerPage: number): Observable<Episode[]> {
+    return this.webReqService.get(`episodes/page/${page}/${itemsPerPage}`).pipe(
+      map((response: any) => {
+        return response as Episode[];
+      })
+    );
+  }
+
+  filterBySeason(season?: number): Observable<Episode[]> {
+    if (!season || season === undefined) {
+      return this.getEpisodes();
+    }
+    season = Number(season);
+    return this.webReqService.get(`episodes/season/${season}`).pipe(
+      map((response: any) => {
+        return response as Episode[];
+      })
+    );
+  }
+
+  searchEpisode(p: number, pageSize:number, episodeToFind?: string): Observable<Episode[]> {
+    if (!episodeToFind || episodeToFind === "" || episodeToFind === undefined) {
+      return this.getEpisodesByPage(p, pageSize);
+    }
+    return this.webReqService.get(`episodes/search/${episodeToFind}`).pipe(
+      map((response: any) => {
+        return response as Episode[];
+      })
+    );
+  }
 
   addEpisode(title: string, season: number, episode_number: number, rating: number): Observable<Episode> {
 
@@ -20,14 +97,9 @@ export class EpisodeService {
       rating: rating
     };
     return this.webReqService.post('episodes', episodeData).pipe(
-      map((response: any) => ({
-        id: response.id,
-        title: response.title,
-        season: response.season,
-        episode_number: response.episode_number,
-        rating: response.rating,
-        image: response.image
-      }))
+      map((response: any) => {
+        return response as Episode;
+      })
     );
   }
 
@@ -45,89 +117,7 @@ export class EpisodeService {
     );
   }
 
-  getEpisodesByRating(rating: number): Observable<Episode[]> {
-    return this.webReqService.get(`episodes/rating/${rating}`).pipe(
-      map((response: any) => {
-        return response.map((episode: any) => ({
-          id: episode.id,
-          title: episode.title,
-          season: episode.season,
-          episode_number: episode.episode_number,
-          rating: episode.rating,
-          image: episode.image
-        }));
-      })
-    );
-  }
-
-  getEpisodeByID(id: number): Observable<Episode> {
-    return this.webReqService.get(`episodes/id/${id}`).pipe(
-      map((response: any) => ({
-        id: response.id,
-        title: response.title,
-        season: response.season,
-        episode_number: response.episode_number,
-        rating: response.rating,
-        image: response.image
-      }))
-    );
-  }
-
-  getPieChartData(): Observable<any> {
-    return this.webReqService.get("episodes/pie-chart-data");
-  }
-
-  getEpisodeByTitle(title: string): Observable<Episode> {
-    return this.webReqService.get(`episodes/title/${this.transformString(title)}`).pipe(
-      map((response: any) => ({
-        id: response.id,
-        title: response.title,
-        season: response.season,
-        episode_number: response.episode_number,
-        rating: response.rating,
-        image: response.image
-      }))
-    );
-  }
-
-  getEpisodes(): Observable<Episode[]> {
-    return this.webReqService.get("episodes").pipe(
-      map((response: any) => {
-        return response.map((episode: any) => ({
-          id: episode.id,
-          title: episode.title,
-          season: episode.season,
-          episode_number: episode.episode_number,
-          rating: episode.rating,
-          image: episode.image
-        }));
-      })
-    );
-  }
-
-  getTotalCount(): Observable<number> {
-    return this.webReqService.get("episodes/length").pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
-  }
   
-
-  getEpisodesByPage(page: number, itemsPerPage: number): Observable<Episode[]> {
-    return this.webReqService.get(`episodes/page/${page}/${itemsPerPage}`).pipe(
-      map((response: any) => {
-        return response.map((episode: any) => ({
-          id: episode.id,
-          title: episode.title,
-          season: episode.season,
-          episode_number: episode.episode_number,
-          rating: episode.rating,
-          image: episode.image
-        }));
-      })
-    );
-  }
 
   deleteEpisode(title: string): Observable<void> {
     return this.webReqService.delete(`episodes/title/${title}`).pipe(
@@ -142,40 +132,4 @@ export class EpisodeService {
     return transformedString;
   }
 
-  filterBySeason(season?: number): Observable<Episode[]> {
-    if (!season || season === undefined) {
-      return this.getEpisodes();
-    }
-    season = Number(season);
-    return this.webReqService.get(`episodes/season/${season}`).pipe(
-      map((response: any) => {
-        return response.map((episode: any) => ({
-          id: episode.id,
-          title: episode.title,
-          season: episode.season,
-          episode_number: episode.episode_number,
-          rating: episode.rating,
-          image: episode.image
-        }));
-      })
-    );
-  }
-
-  searchEpisode(episodeToFind?: string): Observable<Episode[]> {
-    if (!episodeToFind || episodeToFind === "" || episodeToFind === undefined) {
-      return this.getEpisodes();
-    }
-    return this.webReqService.get(`episodes/search/${episodeToFind}`).pipe(
-      map((response: any) => {
-        return response.map((episode: any) => ({
-          id: episode.id,
-          title: episode.title,
-          season: episode.season,
-          episode_number: episode.episode_number,
-          rating: episode.rating,
-          image: episode.image
-        }));
-      })
-    );
-  }
 }

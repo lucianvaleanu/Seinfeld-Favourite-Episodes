@@ -1,0 +1,29 @@
+<div class="signup-container">
+    <div class="signup-content">
+        <div class="signup-text">
+            <h2 class="signup-heading">
+                Welcome back! <br />
+                Your <span class="seinfeld-text">Seinfeld</span> journey continues here. <br />
+            </h2>
+        </div>
+        <div class="card-body with-shadow">
+            <h2 class="text-center">Sign In</h2>
+            <br />
+            <form [formGroup]="signinForm" (ngSubmit)="login()" novalidate>
+                <div class="mb-3">
+                    <label for="nameOrEmail" class="form-label">Username or email</label>
+                    <input type="text" class="form-control" id="nameOrEmail" formControlName="nameOrEmail">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-light">Sign In</button>
+                    <p>Don't have an account?</p>
+                    <a class="login-link" routerLink="/signup">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

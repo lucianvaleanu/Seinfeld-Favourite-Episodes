@@ -1,0 +1,106 @@
+.signup-section {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 41px;
+  }
+  
+  
+  @media (max-width: 991px) {
+    .signup-section {
+      padding: 0 20px;
+    }
+  }
+  
+  .signup-container {
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+  
+  @media (max-width: 991px) {
+    .signup-container {
+      max-width: 100%;
+      margin-right: 4px;
+    }
+  }
+  
+  .signup-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  @media (max-width: 991px) {
+    .signup-content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+  }
+  
+  .signup-text {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 67%;
+    margin-left: 5%;
+  }
+  
+  @media (max-width: 991px) {
+    .signup-text {
+      width: 100%;
+    }
+  }
+  
+  .signup-heading {
+    color: #000;
+    align-self: stretch;
+    margin: auto 0;
+    font: 500 52px Inter, sans-serif;
+  }
+  
+  @media (max-width: 991px) {
+    .signup-heading {
+      max-width: 100%;
+      margin-top: 40px;
+      font-size: 40px;
+    }
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 33%;
+    margin-left: 20px;
+    margin-right: 10%;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding-top: 55px;
+    padding-bottom: 55px;
+    padding-left: 25px;
+    padding-right: 25px;
+    position: relative;
+  }
+  
+  @media (max-width: 991px) {
+    .card-body {
+      width: 100%;
+    }
+  }
+  
+  .btn{
+    margin-bottom: 10px;
+  }
+  
+  .btn.btn-light:hover {
+    background-color: #fc3c23;
+    border-color: #fc3c23;
+    color: white;
+  }
+  
+  .seinfeld-text{
+    color:#fc3c23;
+    font-weight: bold;
+  }
+  
