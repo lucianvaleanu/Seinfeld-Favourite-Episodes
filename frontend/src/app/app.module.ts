@@ -29,6 +29,7 @@ import { SignupComponent } from './components/users/signup/signup.component';
 import { LoginComponent } from './components/users/login/login.component';
 
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { OfflineRequestService } from './services/offline-request.service';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
         { provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptorService,
           multi: true
-        }
+        },
+        OfflineRequestService
     ],
     bootstrap: [AppComponent],
     imports: [

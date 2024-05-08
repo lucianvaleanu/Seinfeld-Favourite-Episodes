@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Episode } from "../models/episode";
 import { Observable, map, throwError} from "rxjs";
 import { WebRequestService } from './web-request.service';
+import { OfflineRequestService } from './offline-request.service';
 
 
 @Injectable({
@@ -9,7 +10,9 @@ import { WebRequestService } from './web-request.service';
 })
 export class EpisodeService {
 
-  constructor(private webReqService: WebRequestService) { }
+  constructor(private webReqService: WebRequestService,
+    private offlineRequestService: OfflineRequestService 
+  ) { }
 
   getEpisodesByRating(rating: number): Observable<Episode[]> {
     return this.webReqService.get(`episodes/rating/${rating}`).pipe(
@@ -95,7 +98,7 @@ export class EpisodeService {
       episode_number: episode_number,
       rating: rating
     };
-    return this.webReqService.post('episodes', episodeData).pipe(
+    return this.offlineRequestService.addToQueue({ uri: 'episodes', method: 'post', payload: episodeData }).pipe(
       map((response: any) => {
         return response as Episode;
       })

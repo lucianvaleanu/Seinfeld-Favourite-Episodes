@@ -1,4 +1,4 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { Episode } from "../../../models/episode";
 import { EpisodeService } from "../../../services/episode.service";
 import { Subscription } from 'rxjs';
@@ -11,9 +11,6 @@ import { AuthService } from '../../../services/auth.service';
 })
 
 export class EpisodesComponent {
-
-
-
   episodes: Episode[] = [];
   pageSize = 12;
   p = 1;
