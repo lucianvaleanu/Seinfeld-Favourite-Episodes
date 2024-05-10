@@ -29,11 +29,6 @@ import { SignupComponent } from './components/users/signup/signup.component';
 import { LoginComponent } from './components/users/login/login.component';
 
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { WebRequestService } from './services/web-request.service';
-import { RequestQueueService } from './services/request-queue.service';
-import { EpisodeService } from './services/episode.service';
-import { ReviewService } from './services/reviews.service';
-import { AuthService } from './services/auth.service';
 
 
 @NgModule({
@@ -57,12 +52,7 @@ import { AuthService } from './services/auth.service';
         { provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptorService,
           multi: true
-        },
-        WebRequestService,
-        RequestQueueService,
-        EpisodeService,
-        ReviewService,
-        AuthService
+        }
     ],
     bootstrap: [AppComponent],
     imports: [
