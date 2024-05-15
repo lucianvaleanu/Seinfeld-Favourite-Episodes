@@ -8,23 +8,24 @@ export class WebRequestService {
 
   readonly ROOT_URL;
 
-  constructor(private http: HttpClient) { 
-    this.ROOT_URL = 'http://localhost:8080';
+  constructor(private http: HttpClient) {
+    this.ROOT_URL = 'https://apiseintracker.azurewebsites.net';
+    //this.ROOT_URL = 'http://localhost:8080'
   }
 
-  get(uri:string){
+  get(uri: string) {
     return this.http.get(`${this.ROOT_URL}/${uri}`);
   }
 
-  post(uri:string, payload:Object){
+  post(uri: string, payload: Object) {
     return this.http.post(`${this.ROOT_URL}/${uri}`, payload);
   }
 
-  put(uri:string, payload:Object){
+  put(uri: string, payload: Object) {
     return this.http.put(`${this.ROOT_URL}/${uri}`, payload);
   }
 
-  delete(uri:string){
+  delete(uri: string) {
     return this.http.delete(`${this.ROOT_URL}/${uri}`);
   }
 }
